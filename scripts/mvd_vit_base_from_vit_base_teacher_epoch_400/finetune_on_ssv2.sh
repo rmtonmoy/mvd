@@ -13,6 +13,7 @@ OMP_NUM_THREADS=1 python -m torch.distributed.launch --nproc_per_node=${GPUS} \
     --data_path ${DATA_PATH} \
     --data_root ${DATA_ROOT} \
     --eval_data_path ${DATA_PATH} \
+    --eval \
     --log_dir ${OUTPUT_DIR} \
     --output_dir ${OUTPUT_DIR} \
     --input_size 224 --short_side_size 224 \
