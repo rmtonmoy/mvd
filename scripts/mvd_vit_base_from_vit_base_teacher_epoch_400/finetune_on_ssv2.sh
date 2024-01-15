@@ -6,7 +6,7 @@ DATA_PATH='/data/NuanceNet/Datafiles/ssv2_anno_v4'
 DATA_ROOT='/data/NuanceNet/Datafiles/dataset_root'
 
 # train on 16 V100 GPUs (2 nodes x 8 GPUs)
-OMP_NUM_THREADS=1 python
+OMP_NUM_THREADS=1 python \
     run_class_finetuning.py \
     --model vit_base_patch16_224 \
     --data_set SSV2 --nb_classes 174 \
