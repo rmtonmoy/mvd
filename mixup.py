@@ -119,7 +119,7 @@ class Mixup:
         self.mixup_enabled = True  # set to false to disable mixing (intended tp be set by train loop)
 
     def _params_per_elem(self, batch_size):
-        lam = np.ones(batch_size, dtype=np.float32)
+        lam = np.ones(batch_size, dtype=float32)
         use_cutmix = np.zeros(batch_size, dtype=np.bool)
         if self.mixup_enabled:
             if self.mixup_alpha > 0. and self.cutmix_alpha > 0.:
@@ -135,7 +135,7 @@ class Mixup:
                 lam_mix = np.random.beta(self.cutmix_alpha, self.cutmix_alpha, size=batch_size)
             else:
                 assert False, "One of mixup_alpha > 0., cutmix_alpha > 0., cutmix_minmax not None should be true."
-            lam = np.where(np.random.rand(batch_size) < self.mix_prob, lam_mix.astype(np.float32), lam)
+            lam = np.where(np.random.rand(batch_size) < self.mix_prob, lam_mix.astype(float32), lam)
         return lam, use_cutmix
 
     def _params_per_batch(self):
@@ -242,7 +242,7 @@ class FastCollateMixup(Mixup):
                     mixed[:, yl:yh, xl:xh] = batch[j][0][:, yl:yh, xl:xh]
                     lam_batch[i] = lam
                 else:
-                    mixed = mixed.astype(np.float32) * lam + batch[j][0].astype(np.float32) * (1 - lam)
+                    mixed = mixed.astype(float32) * lam + batch[j][0].astype(float32) * (1 - lam)
                     np.rint(mixed, out=mixed)
             output[i] += torch.from_numpy(mixed.astype(np.uint8))
         if half:
@@ -267,8 +267,8 @@ class FastCollateMixup(Mixup):
                     mixed_j[:, yl:yh, xl:xh] = patch_i
                     lam_batch[i] = lam
                 else:
-                    mixed_temp = mixed_i.astype(np.float32) * lam + mixed_j.astype(np.float32) * (1 - lam)
-                    mixed_j = mixed_j.astype(np.float32) * lam + mixed_i.astype(np.float32) * (1 - lam)
+                    mixed_temp = mixed_i.astype(float32) * lam + mixed_j.astype(float32) * (1 - lam)
+                    mixed_j = mixed_j.astype(float32) * lam + mixed_i.astype(float32) * (1 - lam)
                     mixed_i = mixed_temp
                     np.rint(mixed_j, out=mixed_j)
                     np.rint(mixed_i, out=mixed_i)
@@ -291,7 +291,7 @@ class FastCollateMixup(Mixup):
                     mixed = mixed.copy()  # don't want to modify the original while iterating
                     mixed[..., yl:yh, xl:xh] = batch[j][0][..., yl:yh, xl:xh]
                 else:
-                    mixed = mixed.astype(np.float32) * lam + batch[j][0].astype(np.float32) * (1 - lam)
+                    mixed = mixed.astype(float32) * lam + batch[j][0].astype(float32) * (1 - lam)
                     np.rint(mixed, out=mixed)
             output[i] += torch.from_numpy(mixed.astype(np.uint8))
         return lam
