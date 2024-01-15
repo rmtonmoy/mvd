@@ -7,7 +7,7 @@ DATA_ROOT='/data/NuanceNet/Datafiles/dataset_root'
 
 # train on 16 V100 GPUs (2 nodes x 8 GPUs)
 OMP_NUM_THREADS=1 python -m torch.distributed.launch --nproc_per_node=${GPUS} \
-    --master_port ${MASTER_PORT} --nnodes=${NODE_COUNT} \
+    --master_port 9901 --nnodes=${NODE_COUNT} \
     --node_rank=${RANK} --master_addr=${MASTER_ADDR} \
     run_class_finetuning.py \
     --model vit_base_patch16_224 \
