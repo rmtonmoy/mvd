@@ -9,7 +9,7 @@ import torch
 
 
 def _get_pixels(
-    per_pixel, rand_color, patch_size, dtype=torch.float32, device="cuda"
+    per_pixel, rand_color, patch_size, dtype=torch.float, device="cuda"
 ):
     # NOTE I've seen CUDA illegal memory access errors being caused by the normal_()
     # paths, flip the order so normal is run on CPU if this becomes a problem
