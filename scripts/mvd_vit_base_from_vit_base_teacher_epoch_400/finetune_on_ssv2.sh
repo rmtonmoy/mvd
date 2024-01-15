@@ -1,9 +1,9 @@
 #!/bin/bash
 GPUS=`nvidia-smi -L | wc -l`
-OUTPUT_DIR='OUTPUT/mvd_vit_base_with_vit_base_teacher_k400_epoch_400/finetune_on_ssv2'
-MODEL_PATH='OUTPUT/mvd_vit_base_with_vit_base_teacher_k400_epoch_400/checkpoint-399.pth'
-DATA_PATH='ssv2_anno'
-DATA_ROOT='your_path/ssv2/videos'
+OUTPUT_DIR='/home/myid/rm54254/mvd/OUTPUT/finetune_on_ssv2'
+MODEL_PATH='/data/NuanceNet/Datafiles/mvd_b_from_b_ckpt_399.pth'
+DATA_PATH='/data/NuanceNet/Datafiles/ssv2_anno_v4'
+DATA_ROOT='/data/NuanceNet/Datafiles/dataset_root'
 
 # train on 16 V100 GPUs (2 nodes x 8 GPUs)
 OMP_NUM_THREADS=1 python -m torch.distributed.launch --nproc_per_node=${GPUS} \
